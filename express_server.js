@@ -13,14 +13,16 @@ const urlDatabase = {
   '9sm5xK': 'http://www.google.com'
 };
 
+//USER GENERATES SHORTURL & REDIRECTS TO
 app.post('/urls', (req, res) => {
-  console.log(req.body);
-  urlDatabase[generateRandomString()] = req.body.longURL;
-  console.log(urlDatabase);
-  res.send('Ok');
+  // console.log(req.body);
+  let rdm = generateRandomString();
+  urlDatabase[rdm] = `http://www.${req.body.longURL}`;
+  // console.log(urlDatabase);
+  res.redirect(303, `/urls/${rdm}`);
 });
 
-//HANDLER
+//HANDLER ALL URLS
 app.get('/urls', (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
@@ -30,49 +32,54 @@ app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
 
+//WHEN INPUT PLACED INTO URL
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
-  res.render('urls_show', templateVars);
+
+  if (urlDatabase[req.params.shortURL]) {
+    console.log(req.params.shortURL);
+    let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
+    res.render('urls_show', templateVars);
+  } else {
+    //EJS FILE
+    res.render('404');
+  }
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello!');
+//SHORTURL ONCLICK REDIRECT TO LONGURL
+app.get('/u/:shortURL', (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  res.redirect(303, longURL);
 });
 
-app.get('/urls.json', (req, res) => {
-  res.json(urlDatabase);
-});
+//ROOT
+// app.get('/', (req, res) => {
+//   res.send('Hello!');
+// });
 
-app.get('/hello', (req, res) => {
-  res.send('<html><body>Hello <b>World</b></body></html>\n');
-});
+// app.get('/urls.json', (req, res) => {
+//   res.json(urlDatabase);
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-//A = 65
-//Z = 90
-
-//a = 97
-//z = 122
-
 const generateRandomString = () => {
   let cipher = '';
   for (let i = 0; i < 6; i++) {
-    if (Math.random() > 0.5) {
-      cipher += Math.floor(Math.random() * 9 + 1);
-      
+    if (random(100) % 2 === 0) {
+      cipher += random(9, 1);
     } else {
-      if (Math.random() > 0.5) {
-        cipher += String.fromCharCode(Math.floor((Math.random() * 26) + 65));
+      if (random(100) % 2 === 0) {
+        cipher += String.fromCharCode(random(26, 65));
       } else {
-        cipher += String.fromCharCode(Math.floor((Math.random() * 26) + 97));
+        cipher += String.fromCharCode(random(26, 97));
       }
     }
   }
-  
   return cipher;
 };
 
-// console.log(generateRandomString());
+const random = (range, floor = 0) => {
+  return Math.floor((Math.random() * range) + floor);
+};
