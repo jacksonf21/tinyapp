@@ -22,13 +22,20 @@ app.post('/urls', (req, res) => {
   res.redirect(303, `/urls/${rdm}`);
 });
 
+//DELETES URL
 app.post('/urls/:shortURL/delete', (req, res) => {
-  // console.log(req.body); Debugging
   delete urlDatabase[req.params.shortURL];
-  console.log(urlDatabase); //Debugging
   res.redirect(303, `/urls`);
 });
 
+app.post('/urls/:id', (req, res) => {
+  urlDatabase[req.params.id] = req.body.longURL;
+  // console.log(req.body);
+  console.log(req.body.longURL);
+  console.log(urlDatabase);
+  // urlDatabase[req.params.id] = req.body;
+  res.redirect(303, `/urls`);
+});
 
 //HANDLER ALL URLS
 app.get('/urls', (req, res) => {
