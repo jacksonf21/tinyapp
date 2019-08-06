@@ -1,26 +1,24 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-success">
-    <a class="navbar-brand" href="/urls">TinyApp</a>
+    <a class="navbar-brand" href="/urls" style='font-size: 30px'>TinyApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav" style = "margin-top: 1px">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+      <div class="navbar-nav" style = "margin-top: .35px">
+        <a class="nav-item nav-link" href="/urls" style='font-size: 25px'>My URLs</a>
+        <a class="nav-item nav-link" href="/urls/new" style='font-size: 25px'>Create New URL</a>
       </div>
     </div>
     
     <%if (username) { %>
-    <form class="form-inline" action="/logout" method="POST">
-      <div class="form-inline">
-        <label for="username" style="padding-right: 10px">Logged In As: <%=username%>!</label>
-        <button type="submit" class="btn btn-outline-dark">Logout</button>
-      </div>
+    <form class="form-inline" style= "margin: 0px;" action="/logout" method="POST">
+      <label for="username" style="margin: 24px; font-size: 20px"><b>Logged In As: <%=username%>!</b></label>
+      <button type="submit" class="btn btn-outline-dark">Logout</button>
     </form>
     <% } else if (!username) { %>
-    <form class="form-inline" action="/login" method="POST">
-      <input class="form-control" type="text" name="username" placeholder="Username" style="width: 300px; margin: 1em">
+    <form class="form-inline" style= "margin: 0px;" action="/login" method="POST">
+      <input class="form-control" type="text" name="username" placeholder="Username" style="width: 300px; margin: 20px">
       <button type="submit" class="btn btn-outline-dark">Login</button>
     </form>
     <% } %>
