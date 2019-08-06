@@ -31,11 +31,13 @@ app.post('/urls/:shortURL/delete', (req, res) => {
 
 app.post('/urls/:id', (req, res) => {
   urlDatabase[req.params.id] = req.body.longURL;
-  // console.log(req.body);
-  console.log(req.body.longURL);
-  console.log(urlDatabase);
-  // urlDatabase[req.params.id] = req.body;
   res.redirect(303, `/urls`);
+});
+
+//CREATE COOKIE
+app.post('/login', (req, res) => {
+  res.cookie('username', req.body.username);
+  res.redirect(303, '/urls');
 });
 
 //HANDLER ALL URLS
