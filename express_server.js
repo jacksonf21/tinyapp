@@ -15,10 +15,10 @@ const urlDatabase = {
 
 //USER GENERATES SHORTURL & REDIRECTS TO
 app.post('/urls', (req, res) => {
-  // console.log(req.body);
-  let rdm = generateRandomString();
+  // console.log(req.body); Debugging
+  let rdm = generateRandomString(6);
   urlDatabase[rdm] = `http://www.${req.body.longURL}`;
-  // console.log(urlDatabase);
+  // console.log(urlDatabase); Debugging
   res.redirect(303, `/urls/${rdm}`);
 });
 
@@ -64,9 +64,9 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
 
-const generateRandomString = () => {
+const generateRandomString = (n) => {
   let cipher = '';
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < n; i++) {
     if (random(100) % 2 === 0) {
       cipher += random(9, 1);
     } else {
