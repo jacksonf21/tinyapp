@@ -16,6 +16,7 @@ const urlDatabase = {
 //USER GENERATES SHORTURL & REDIRECTS TO
 app.post('/urls', (req, res) => {
   // console.log(req.body); Debugging
+  // let suffix = req.body.longURL.replace(/[a-z]+./i,'');
   let rdm = generateRandomString(6);
   urlDatabase[rdm] = `http://www.${req.body.longURL}`;
   // console.log(urlDatabase); Debugging
