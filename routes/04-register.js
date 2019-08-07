@@ -1,7 +1,6 @@
 let express = require('express');
 let users = require('../express_server');
-const { generateRandomString } = require('../rand/random');
-const { validationCheck } = require('../rand/random');
+const { generateRandomString, emailExists } = require('../rand/random');
 let router = express.Router();
 
 //LOGOUT
@@ -16,17 +15,17 @@ router.post('/', (req, res) => {
   console.log(req.body.email);
   let id = generateRandomString(6);
   
-  if (validationCheck(req, users) === true) {
-    users[id] = id;
-    users[id] = {id};
-    users[id].email = req.body.email;
-    users[id].password = req.body.password;
-    
+  if (!emailExists(req, users) && req.body.password) {
+    users[id] = {
+      id: id,
+      email: req.body.email,
+      password: req.body.password
+    };
     res.cookie('user_id', id);
     res.redirect(303, '/urls');
     console.log(users);
   } else {
-    res.send('fail');
+    res.sendStatus(400);
     console.log(users);
   }
   

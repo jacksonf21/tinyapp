@@ -12,6 +12,7 @@ const generateRandomString = (n) => {
       }
     }
   }
+  cipher = String(cipher);
   return cipher;
 };
 
@@ -19,16 +20,18 @@ const random = (range, floor = 0) => {
   return Math.floor((Math.random() * range) + floor);
 };
 
-const validationCheck = (req, users) => {
+//CHECK IF EMAIL EXISTING AND PASSWORD MATCHES
+const emailExists = (req, users) => {
   let usersKeys = Object.keys(users);
   for (let key of usersKeys) {
-    if (users[key].email === req.body.email || users[key].email === '' || users[key].password === '') {
-      return false;
-    } else {
-      return true;
-    }
+    if (users[key].email === req.body.email) return true;
   }
-  return true;
+  return false;
 };
 
-module.exports = { generateRandomString, validationCheck };
+const keyFromVal = (req, users) => {
+  let emailKey = Object.keys(users).find(key => users[key].email === req.body.email);
+  return emailKey;
+};
+
+module.exports = { generateRandomString, emailExists, keyFromVal };
