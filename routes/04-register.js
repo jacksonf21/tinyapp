@@ -7,7 +7,7 @@ let router = express.Router();
 //LOGOUT
 router.get('/', (req, res) => {
   let templateVars = {
-    username: req.cookies.username
+    username: users[req.cookies.user_id]
   };
   res.render('urls_register', templateVars);
 });
@@ -15,17 +15,22 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   console.log(req.body.email);
   let id = generateRandomString(6);
-  users[id] = id;
-  users[id] = {id};
-  res.cookie(`userId${id}`, id);
   
   if (validationCheck(req, users) === true) {
+    users[id] = id;
+    users[id] = {id};
     users[id].email = req.body.email;
     users[id].password = req.body.password;
+    
+    res.cookie('user_id', id);
+    res.redirect(303, '/urls');
+    console.log(users);
+    return id;
+  } else {
+    res.send('fail');
+    console.log(users);
   }
   
-  console.log(users);
-  res.redirect(303, '/urls');
 });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 const { generateRandomString } = require('../rand/random');
+const users = require('../express_server')
 
 const urlDatabase = {
   'b2xVn2': 'http://www.lighthouselabs.ca',
@@ -11,7 +12,8 @@ const urlDatabase = {
 router.get('/', (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies.username
+    username: users[req.cookies.user_id]
+
   };
   res.render('urls_index', templateVars);
 });
@@ -19,7 +21,8 @@ router.get('/', (req, res) => {
 //CREATE NEW URL
 router.get('/new', (req, res) => {
   let templateVars = {
-    username: req.cookies.username
+    username: users[req.cookies.user_id]
+
   };
   res.render('urls_new', templateVars);
 });
@@ -52,7 +55,7 @@ router.get('/:shortURL', (req, res) => {
     let templateVars = {
       shortURL: req.params.shortURL,
       longURL: urlDatabase[req.params.shortURL],
-      username: req.cookies.username
+      username: users[req.cookies.user_id]
     };
 
     res.render('urls_show', templateVars);

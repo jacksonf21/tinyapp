@@ -28,6 +28,7 @@ const validationCheck = (req, users) => {
       return true;
     }
   }
+  return true;
 };
 
 module.exports = { generateRandomString, validationCheck };
