@@ -20,11 +20,15 @@ router.get('/', (req, res) => {
 
 //CREATE NEW URL
 router.get('/new', (req, res) => {
-  let templateVars = {
-    username: users[req.cookies.user_id]
-
-  };
-  res.render('urls_new', templateVars);
+  if (req.cookies.user_id) {
+    let templateVars = {
+      username: users[req.cookies.user_id]
+  
+    };
+    res.render('urls_new', templateVars);
+  } else {
+    res.redirect(303, '/login');
+  }
 });
 
 //CREATE NEW URL => GENERATES SHORTURL & REDIRECTS TO SHOW ALL URLS
@@ -54,6 +58,7 @@ router.get('/:shortURL', (req, res) => {
   if (urlDatabase[req.params.shortURL]) {
     let templateVars = {
       shortURL: req.params.shortURL,
+      //NEEDS TO BE UPDATED BELOW TO INCLUDE .longURL
       longURL: urlDatabase[req.params.shortURL],
       username: users[req.cookies.user_id]
     };
@@ -67,6 +72,7 @@ router.get('/:shortURL', (req, res) => {
 
 //SHORTURL ONCLICK REDIRECT TO ACTUAL LONGURL
 router.get('/u/:shortURL', (req, res) => {
+  //NEEDS TO BE UPDATED BELOW TO INCLUDE .longURL
   const longURL = urlDatabase[req.params.shortURL];
   res.redirect(303, longURL);
 });
