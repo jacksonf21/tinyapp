@@ -9,6 +9,8 @@ const routesLogin = require('./routes/02-login');
 const routesLogout = require('./routes/03-logout');
 const routesRegister = require('./routes/04-register');
 
+const users = {};
+
 app.set('view engine', 'ejs');
 
 //CONVERTS BODY REQ IN BUFFER TO STRING
@@ -22,3 +24,5 @@ app.use('/register', routesRegister);
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+
+module.exports = users;

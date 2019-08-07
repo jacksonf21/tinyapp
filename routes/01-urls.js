@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+const { generateRandomString } = require('../rand/random');
 
 const urlDatabase = {
   'b2xVn2': 'http://www.lighthouselabs.ca',
@@ -67,24 +68,5 @@ router.get('/u/:shortURL', (req, res) => {
   res.redirect(303, longURL);
 });
 
-const generateRandomString = (n) => {
-  let cipher = '';
-  for (let i = 0; i < n; i++) {
-    if (random(100) % 2 === 0) {
-      cipher += random(9, 1);
-    } else {
-      if (random(100) % 2 === 0) {
-        cipher += String.fromCharCode(random(26, 65));
-      } else {
-        cipher += String.fromCharCode(random(26, 97));
-      }
-    }
-  }
-  return cipher;
-};
-
-const random = (range, floor = 0) => {
-  return Math.floor((Math.random() * range) + floor);
-};
 
 module.exports = router;
