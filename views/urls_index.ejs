@@ -16,6 +16,7 @@
 
   <main style="margin: 1em;">
     <h3>My URLs</h3>
+    <% if (username) { %>
     <table class="table">
       <thead>
         <tr>
@@ -26,10 +27,11 @@
         </tr>
       </thead>
       <tbody>
-        <% for(let url in urls) { %>
+        <% let urlKeys = Object.keys(urls); %>
+        <% for(let url of urlKeys) { %>
           <tr>
             <td><%= url %></td>
-            <td><%= urls[url] %></td>
+            <td><%= urls[url].longURL %></td>
             <td>
               <form method="GET" action= "/urls/<%= url %>/">
                 <button type="submit" class="btn btn-outline-primary">Edit</button>
@@ -45,6 +47,9 @@
         <% } %>
       </tbody>
     </table>
+    <% } else { %>
+      <h4>Please login or register.</h4>
+    <% } %>
   </main>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

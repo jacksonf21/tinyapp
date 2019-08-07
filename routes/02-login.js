@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
   console.log(emailExists(req, users));
 
   if (emailExists(req, users)) {
-    let emailKey = keyFromVal(req, users);
+    let emailKey = keyFromVal(req, users, 'email');
 
     if (users[emailKey].password === req.body.password) {
       res.cookie('user_id', emailKey);

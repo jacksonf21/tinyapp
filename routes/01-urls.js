@@ -1,17 +1,26 @@
 let express = require('express');
 let router = express.Router();
 const { generateRandomString } = require('../rand/random');
-const users = require('../express_server')
+const users = require('../express_server');
 
 const urlDatabase = {
-  'b2xVn2': 'http://www.lighthouselabs.ca',
-  '9sm5xK': 'http://www.google.com'
+  'b2xVn2': { longURL: 'http://www.lighthouselabs.ca', userID: 'none'},
+  '9sm5xK': { longURL: 'http://www.google.com', userID: 'none'}
 };
 
 //SHOW ALL URLS
 router.get('/', (req, res) => {
+  const urlDatabaseFiltered = {};
+  const urlKeys = Object.keys(urlDatabase);
+  for (let url of urlKeys) {
+    if (urlDatabase[url].userID === req.cookies.user_id) {
+      urlDatabaseFiltered[url] = urlDatabase[url];
+    }
+  }
+  console.log(urlDatabaseFiltered);
+
   let templateVars = {
-    urls: urlDatabase,
+    urls: urlDatabaseFiltered,
     username: users[req.cookies.user_id]
 
   };
@@ -34,22 +43,42 @@ router.get('/new', (req, res) => {
 //CREATE NEW URL => GENERATES SHORTURL & REDIRECTS TO SHOW ALL URLS
 router.post('/', (req, res) => {
   let suffix = req.body.longURL.replace(/.+w\./i, '');
+  let web = `http://www.${suffix}`;
   let rdm = generateRandomString(6);
-  urlDatabase[rdm] = `http://www.${suffix}`;
+  urlDatabase[rdm] = {
+    longURL: web,
+    userID: req.cookies.user_id
+  };
+  console.log(urlDatabase);
+
   res.redirect(303, `/urls/${rdm}`);
 });
 
 //DELETES URL
 router.post('/:shortURL/delete', (req, res) => {
-  delete urlDatabase[req.params.shortURL];
-  res.redirect(303, `/urls`);
+  if (req.cookies.user_id && urlDatabase[req.params.id].userID === req.cookies.user_id) {
+    delete urlDatabase[req.params.shortURL];
+    res.redirect(303, `/urls`);
+  } else {
+    res.send('cannot delete, as this is not your link');
+  }
 });
 
 //EDIT URL
 router.post('/:id', (req, res) => {
-  let suffix = req.body.longURL.replace(/.+w\./i, '');
-  urlDatabase[req.params.id] = `http://www.${suffix}`;
-  res.redirect(303, `/urls`);
+  //NOT THE SAME ID LOGIC
+  if (req.cookies.user_id && urlDatabase[req.params.id].userID !== req.cookies.user_id) {
+    res.send('cannot edit, as this is not your link');
+  } else if (urlDatabase[req.params.id].userID === req.cookies.user_id) {
+    let suffix = req.body.longURL.replace(/.+w\./i, '');
+    urlDatabase[req.params.id].longURL = `http://www.${suffix}`;
+    res.redirect(303, `/urls`);
+  } else {
+    res.send('please login');
+  }
+  //LOGIN LOGIC
+
+
 });
 
 //EACH INSTANCE OF SHORTURL PAGE
@@ -58,8 +87,7 @@ router.get('/:shortURL', (req, res) => {
   if (urlDatabase[req.params.shortURL]) {
     let templateVars = {
       shortURL: req.params.shortURL,
-      //NEEDS TO BE UPDATED BELOW TO INCLUDE .longURL
-      longURL: urlDatabase[req.params.shortURL],
+      longURL: urlDatabase[req.params.shortURL].longURL,
       username: users[req.cookies.user_id]
     };
 
@@ -72,8 +100,10 @@ router.get('/:shortURL', (req, res) => {
 
 //SHORTURL ONCLICK REDIRECT TO ACTUAL LONGURL
 router.get('/u/:shortURL', (req, res) => {
+  // console.log(req.params.shortURL);
   //NEEDS TO BE UPDATED BELOW TO INCLUDE .longURL
-  const longURL = urlDatabase[req.params.shortURL];
+  let longURL = urlDatabase[req.params.shortURL].longURL;
+  // console.log(longURL);
   res.redirect(303, longURL);
 });
 

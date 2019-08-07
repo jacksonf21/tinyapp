@@ -29,9 +29,9 @@ const emailExists = (req, users) => {
   return false;
 };
 
-const keyFromVal = (req, users) => {
-  let emailKey = Object.keys(users).find(key => users[key].email === req.body.email);
-  return emailKey;
+const keyFromVal = (req, users, property) => {
+  let mainKey = Object.keys(users).find(key => users[key][property] === req.body[property]);
+  return mainKey;
 };
 
 module.exports = { generateRandomString, emailExists, keyFromVal };
