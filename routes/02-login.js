@@ -2,7 +2,7 @@ let express = require('express');
 let users = require('../express_server');
 let bcrypt = require('bcrypt');
 let router = express.Router();
-const { emailExists , keyFromVal } = require('../rand/random');
+const { emailExists , keyFromVal } = require('../rand/helper');
 
 router.get('/', (req, res) => {
   let templateVars = {

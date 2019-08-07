@@ -1,7 +1,7 @@
 let express = require('express');
 let users = require('../express_server');
 const bcrypt = require('bcrypt');
-const { generateRandomString, emailExists } = require('../rand/random');
+const { generateRandomString, emailExists } = require('../rand/helper');
 let router = express.Router();
 
 //LOGOUT

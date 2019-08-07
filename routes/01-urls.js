@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-const { generateRandomString } = require('../rand/random');
+const { generateRandomString } = require('../rand/helper');
 const users = require('../express_server');
 
 const urlDatabase = {
