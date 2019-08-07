@@ -1,5 +1,6 @@
 let express = require('express');
 let users = require('../express_server');
+const bcrypt = require('bcrypt');
 const { generateRandomString, emailExists } = require('../rand/random');
 let router = express.Router();
 
@@ -16,11 +17,17 @@ router.post('/', (req, res) => {
   let id = generateRandomString(6);
   
   if (!emailExists(req, users) && req.body.password) {
+    const pw = req.body.password;
+    const hashPw = bcrypt.hashSync(pw, 10);
+    
+    console.log(hashPw);
+
     users[id] = {
       id: id,
       email: req.body.email,
-      password: req.body.password
+      password: hashPw
     };
+
     res.cookie('user_id', id);
     res.redirect(303, '/urls');
     console.log(users);

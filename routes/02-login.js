@@ -1,8 +1,8 @@
 let express = require('express');
 let users = require('../express_server');
+let bcrypt = require('bcrypt');
 let router = express.Router();
 const { emailExists , keyFromVal } = require('../rand/random');
-
 
 router.get('/', (req, res) => {
   let templateVars = {
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
   if (emailExists(req, users)) {
     let emailKey = keyFromVal(req, users, 'email');
 
-    if (users[emailKey].password === req.body.password) {
+    if (bcrypt.compareSync(req.body.password, users[emailKey].password)) {
       res.cookie('user_id', emailKey);
       res.redirect(303, '/urls');
     }
