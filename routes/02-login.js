@@ -6,7 +6,7 @@ const { emailExists , keyFromVal } = require('../rand/random');
 
 router.get('/', (req, res) => {
   let templateVars = {
-    username: users[req.cookies.user_id]
+    username: users[req.session.user_id]
   };
   res.render('urls_login', templateVars);
 });
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     let emailKey = keyFromVal(req, users, 'email');
 
     if (bcrypt.compareSync(req.body.password, users[emailKey].password)) {
-      res.cookie('user_id', emailKey);
+      res.session.user_id = emailKey;
       res.redirect(303, '/urls');
     }
   } else {

@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   const urlDatabaseFiltered = {};
   const urlKeys = Object.keys(urlDatabase);
   for (let url of urlKeys) {
-    if (urlDatabase[url].userID === req.cookies.user_id) {
+    if (urlDatabase[url].userID === req.session.user_id) {
       urlDatabaseFiltered[url] = urlDatabase[url];
     }
   }
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 
   let templateVars = {
     urls: urlDatabaseFiltered,
-    username: users[req.cookies.user_id]
+    username: users[req.session.user_id]
 
   };
   res.render('urls_index', templateVars);
@@ -29,9 +29,9 @@ router.get('/', (req, res) => {
 
 //CREATE NEW URL
 router.get('/new', (req, res) => {
-  if (req.cookies.user_id) {
+  if (req.session.user_id) {
     let templateVars = {
-      username: users[req.cookies.user_id]
+      username: users[req.session.user_id]
   
     };
     res.render('urls_new', templateVars);
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
   let rdm = generateRandomString(6);
   urlDatabase[rdm] = {
     longURL: web,
-    userID: req.cookies.user_id
+    userID: req.session.user_id
   };
   console.log(urlDatabase);
 
@@ -56,7 +56,8 @@ router.post('/', (req, res) => {
 
 //DELETES URL
 router.post('/:shortURL/delete', (req, res) => {
-  if (req.cookies.user_id && urlDatabase[req.params.id].userID === req.cookies.user_id) {
+
+  if (req.session.user_id && urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     delete urlDatabase[req.params.shortURL];
     res.redirect(303, `/urls`);
   } else {
@@ -67,9 +68,9 @@ router.post('/:shortURL/delete', (req, res) => {
 //EDIT URL
 router.post('/:id', (req, res) => {
   //NOT THE SAME ID LOGIC
-  if (req.cookies.user_id && urlDatabase[req.params.id].userID !== req.cookies.user_id) {
+  if (req.session.user_id && urlDatabase[req.params.id].userID !== req.session.user_id) {
     res.send('cannot edit, as this is not your link');
-  } else if (urlDatabase[req.params.id].userID === req.cookies.user_id) {
+  } else if (urlDatabase[req.params.id].userID === req.session.user_id) {
     let suffix = req.body.longURL.replace(/.+w\./i, '');
     urlDatabase[req.params.id].longURL = `http://www.${suffix}`;
     res.redirect(303, `/urls`);
@@ -88,7 +89,7 @@ router.get('/:shortURL', (req, res) => {
     let templateVars = {
       shortURL: req.params.shortURL,
       longURL: urlDatabase[req.params.shortURL].longURL,
-      username: users[req.cookies.user_id]
+      username: users[req.session.user_id]
     };
 
     res.render('urls_show', templateVars);

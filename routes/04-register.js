@@ -7,7 +7,7 @@ let router = express.Router();
 //LOGOUT
 router.get('/', (req, res) => {
   let templateVars = {
-    username: users[req.cookies.user_id]
+    username: users[req.session.user_id]
   };
   res.render('urls_register', templateVars);
 });
@@ -27,8 +27,8 @@ router.post('/', (req, res) => {
       email: req.body.email,
       password: hashPw
     };
-
-    res.cookie('user_id', id);
+    // res.cookie('user_id', id);
+    req.session.user_id = id;
     res.redirect(303, '/urls');
     console.log(users);
   } else {

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
+// const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const app = express();
 const PORT = 8080;
 
@@ -15,7 +15,10 @@ const users = {};
 app.set('view engine', 'ejs');
 
 //CONVERTS BODY REQ IN BUFFER TO STRING
-app.use(bodyParser.urlencoded({extended: true}), cookieParser());
+app.use(bodyParser.urlencoded({extended: true}), cookieSession({
+  name: 'session',
+  keys: ['Key1', 'Key2']
+}));
 
 app.use('/urls', routesUrls);
 app.use('/login', routesLogin);
