@@ -25,7 +25,6 @@ router.post('/', (req, res) => {
     res.cookie('user_id', id);
     res.redirect(303, '/urls');
     console.log(users);
-    return id;
   } else {
     res.send('fail');
     console.log(users);

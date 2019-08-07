@@ -17,8 +17,11 @@
       <button type="submit" class="btn btn-outline-dark">Logout</button>
     </form>
     <% } else if (!username) { %>
-    <form class="form-inline" style= "margin: 0px;" action="/login" method="POST">
-      <input class="form-control" type="text" name="username" placeholder="Username" style="width: 300px; margin: 20px">
+    <form class="form-inline" style= "margin: 0px;" action="/register" method="GET">
+      <button type="submit" class="btn btn-outline-dark" style= "margin: 20px">Register</button>
+    </form>
+
+    <form class="form-inline" style= "margin: 0px;" action="/login" method="GET">
       <button type="submit" class="btn btn-outline-dark">Login</button>
     </form>
     <% } %>
