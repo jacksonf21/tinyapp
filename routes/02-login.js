@@ -1,5 +1,5 @@
 let express = require('express');
-let users = require('../db/database');
+let { users } = require('../db/database');
 let bcrypt = require('bcrypt');
 let router = express.Router();
 const { emailExists , keyFromVal } = require('../rand/helper');
@@ -22,17 +22,17 @@ router.post('/', (req, res) => {
     if (bcrypt.compareSync(req.body.password, users[emailKey].password)) {
       req.session.user_id = emailKey;
       res.redirect(303, '/urls');
+    } else {
+      res.status(403);
+      let templateVars =  {
+        username: users[req.session.user_id],
+        alert: true
+      };
+      res.render('urls_login', templateVars);
     }
-    res.status(403);
-    let templateVars =  {
-      username: users[req.session.user_id],
-      alert: true
-    };
-
-    res.render('urls_login', templateVars)
   } else {
     res.status(403);
-    let templateVars =  {
+    let templateVars = {
       username: users[req.session.user_id],
       alert: true
     };

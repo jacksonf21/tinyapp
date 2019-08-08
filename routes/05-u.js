@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { urlDatabase } = require('../db/database');
 
+//SHORTURL ONCLICK REDIRECT TO ACTUAL LONGURL
 router.get('/:shortURL', (req, res) => {
   let today = String(new Date());
   let date = today.replace(/GMT.+/gi, '');

@@ -64,13 +64,13 @@ router.post('/:shortURL/delete', (req, res) => {
 
 //EDIT URL
 router.post('/:id', (req, res) => {
-  //NOT THE SAME ID LOGIC
   if (req.session.user_id && urlDatabase[req.params.id].userID !== req.session.user_id) {
 
     let templateVars = {
       shortURL: req.params.id,
       longURL: urlDatabase[req.params.id].longURL,
       username: users[req.session.user_id],
+      counter: urlDatabase[req.params.id].counter,
       alert: true
     };
 
@@ -80,14 +80,21 @@ router.post('/:id', (req, res) => {
     urlDatabase[req.params.id].longURL = `http://www.${suffix}`;
     res.redirect(303, `/urls`);
   } else {
-    res.send('please login');
+    let templateVars = {
+      shortURL: req.params.id,
+      longURL: urlDatabase[req.params.id].longURL,
+      username: users[req.session.user_id],
+      counter: urlDatabase[req.params.id].counter,
+      alert: true
+    };
+
+    res.render('urls_show', templateVars);
   }
 
 });
 
 //EACH INSTANCE OF SHORTURL PAGE
 router.get('/:shortURL', (req, res) => {
-  console.log(urlDatabase[req.params.shortURL].counter);
 
   if (urlDatabase[req.params.shortURL]) {
     let templateVars = {
@@ -103,20 +110,5 @@ router.get('/:shortURL', (req, res) => {
     res.render('404');
   }
 });
-
-//SHORTURL ONCLICK REDIRECT TO ACTUAL LONGURL
-router.get('/u/:shortURL', (req, res) => {
-  // console.log(urlDatabase[req.params.shortURL].counter);
-  let today = String(new Date());
-  let date = today.replace(/GMT.+/gi, '');
-  // let fullDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
-  console.log(date);
-  
-  urlDatabase[req.params.shortURL].counter += 1;
-  urlDatabase[req.params.shortURL].dateOnClick.push(date);
-  let longURL = urlDatabase[req.params.shortURL].longURL;
-  res.redirect(303, longURL);
-});
-
 
 module.exports = router;
