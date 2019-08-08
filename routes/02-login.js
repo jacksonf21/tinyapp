@@ -6,20 +6,16 @@ const { emailExists , keyFromVal } = require('../rand/helper');
 
 router.get('/', (req, res) => {
   let templateVars = {
-    username: users[req.session.user_id]
+    username: users[req.session.user_id],
+    alert: false
   };
   res.render('urls_login', templateVars);
 });
 
 //CREATE COOKIE
 router.post('/', (req, res) => {
-  // console.log(req.body.password);
-  // console.log(req.cookies);
-  // console.log(req.cookies.user_id);
 
   //NEED TO ADD ID MATCH
-  console.log(emailExists(req, users));
-
   if (emailExists(req, users)) {
     let emailKey = keyFromVal(req, users, 'email');
 
@@ -28,7 +24,13 @@ router.post('/', (req, res) => {
       res.redirect(303, '/urls');
     }
   } else {
-    res.sendStatus('403');
+    res.status(403);
+    let templateVars =  {
+      username: users[req.session.user_id],
+      alert: true
+    };
+
+    res.render('urls_login', templateVars);
   }
 
 });

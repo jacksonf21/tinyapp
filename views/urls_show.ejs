@@ -8,6 +8,11 @@
 <body>
   <header>
       <% include partials/_header %>
+      <% if (alert) { %>
+        <div class="alert alert-danger" role="alert">
+            Cannot delete, as this is not your link.
+        </div>
+      <% } %>
   </header>
   <div class="card text-center">
       <div class="card-header"></div>
@@ -25,6 +30,7 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
+      Times Clicked: <%=counter %>
     </div>
   </div>
   <!-- Bootstrap JS -->

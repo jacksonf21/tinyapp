@@ -1,5 +1,4 @@
 const { assert } = require('chai');
-
 const { generateRandomString, emailExists, keyFromVal } = require('../rand/helper');
 
 const testUsers = {
