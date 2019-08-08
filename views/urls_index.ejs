@@ -23,6 +23,8 @@
         <tr>
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
+          <th scope="col">Clicks</th>
+          <th scope="col">Most Recent Click</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>        
         </tr>
@@ -33,6 +35,8 @@
           <tr>
             <td><%= url %></td>
             <td><%= urls[url].longURL %></td>
+            <td><%= urls[url].counter %></td>
+            <td><%= urls[url].dateOnClick[urls[url].dateOnClick.length - 1] %></td>
             <td>
               <form method="GET" action= "/urls/<%= url %>/">
                 <button type="submit" class="btn btn-outline-primary">Edit</button>
@@ -43,25 +47,11 @@
                 <button type="submit" class="btn btn-outline-danger">Delete</button>
               </form>
             </td>
-
           </tr>
         <% } %>
       </tbody>
     </table>
     <% } else { %>
-      <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="..." class="d-block w-100" alt="...">
-            </div>
-          </div>
-        </div> -->
       <div class="jumbotron">
           <h1 class="display-4">TinyApp, convenience!</h1>
           <p class="lead">TinyApp shortens your favourite url links, and allows sharing them to anyone.</p>

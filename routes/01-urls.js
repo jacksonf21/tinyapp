@@ -49,7 +49,8 @@ router.post('/', (req, res) => {
   urlDatabase[rdm] = {
     longURL: web,
     userID: req.session.user_id,
-    counter: 0
+    counter: 0,
+    dateOnClick: []
   };
 
   res.redirect(303, `/urls/${rdm}`);
@@ -111,8 +112,13 @@ router.get('/:shortURL', (req, res) => {
 //SHORTURL ONCLICK REDIRECT TO ACTUAL LONGURL
 router.get('/u/:shortURL', (req, res) => {
   // console.log(urlDatabase[req.params.shortURL].counter);
-
+  let today = String(new Date());
+  let date = today.replace(/GMT.+/gi, '');
+  // let fullDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+  console.log(date);
+  
   urlDatabase[req.params.shortURL].counter += 1;
+  urlDatabase[req.params.shortURL].dateOnClick.push(date);
   let longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(303, longURL);
 });

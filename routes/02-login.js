@@ -23,6 +23,13 @@ router.post('/', (req, res) => {
       req.session.user_id = emailKey;
       res.redirect(303, '/urls');
     }
+    res.status(403);
+    let templateVars =  {
+      username: users[req.session.user_id],
+      alert: true
+    };
+
+    res.render('urls_login', templateVars)
   } else {
     res.status(403);
     let templateVars =  {
