@@ -78,7 +78,7 @@ router.post('/:id', (req, res) => {
   } else if (urlDatabase[req.params.id].userID === req.session.user_id) {
     let suffix = req.body.longURL.replace(/.+w\./i, '');
     urlDatabase[req.params.id].longURL = `http://www.${suffix}`;
-    res.redirect(303, `/urls`);
+    res.redirect(303, '/urls');
   } else {
     let templateVars = {
       shortURL: req.params.id,
@@ -107,7 +107,7 @@ router.get('/:shortURL', (req, res) => {
 
     res.render('urls_show', templateVars);
   } else {
-    res.render('404');
+    res.redirect(303, '/urls');
   }
 });
 
