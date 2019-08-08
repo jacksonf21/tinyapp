@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     let emailKey = keyFromVal(req, users, 'email');
 
     if (bcrypt.compareSync(req.body.password, users[emailKey].password)) {
-      res.session.user_id = emailKey;
+      req.session.user_id = emailKey;
       res.redirect(303, '/urls');
     }
   } else {

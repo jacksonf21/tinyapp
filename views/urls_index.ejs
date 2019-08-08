@@ -15,8 +15,9 @@
   </header>
 
   <main style="margin: 1em;">
-    <h3>My URLs</h3>
+    
     <% if (username) { %>
+    <h3>My URLs</h3>
     <table class="table">
       <thead>
         <tr>
@@ -48,7 +49,29 @@
       </tbody>
     </table>
     <% } else { %>
-      <h4>Please login or register.</h4>
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="..." class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="..." class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="..." class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
+      <div class="jumbotron">
+          <h1 class="display-4">TinyApp, convenience!</h1>
+          <p class="lead">TinyApp shortens your favourite url links, and allows sharing them to anyone.</p>
+          <hr class="my-4">
+          <p>If you're new, please register below.</p>
+          <form method="GET" action= "/register">
+            <button type="submit" class="btn btn-success btn-lg">Register</button>
+          </form>
+        </div>
+      <!-- <h4>Please login or register.</h4> -->
     <% } %>
   </main>
   <!-- Bootstrap JS -->
