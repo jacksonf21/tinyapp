@@ -1,5 +1,5 @@
 let express = require('express');
-let users = require('../express_server');
+let users = require('../db/database');
 let bcrypt = require('bcrypt');
 let router = express.Router();
 const { emailExists , keyFromVal } = require('../rand/helper');

@@ -1,5 +1,5 @@
 const express = require('express');
-const users = require('../express_server');
+const { users } = require('../db/database');
 const bcrypt = require('bcrypt');
 const { generateRandomString, emailExists } = require('../rand/helper');
 const router = express.Router();

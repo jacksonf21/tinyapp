@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../express_server');
+const { users, urlDatabase } = require('../db/database');
 const { generateRandomString } = require('../rand/helper');
-
-const urlDatabase = {
-  'b2xVn2': { longURL: 'http://www.lighthouselabs.ca', userID: 'none'},
-  '9sm5xK': { longURL: 'http://www.google.com', userID: 'none'}
-};
 
 //SHOW ALL URLS
 router.get('/', (req, res) => {
