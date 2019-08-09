@@ -6,8 +6,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <title>New URL - TinyApp Example</title>
+    <link rel='stylesheet' href='../css/urlsNew.css'>
+    <title>TinyApp - New URL</title>
   </head>
 
   <body>
@@ -16,13 +16,11 @@
       <% include partials/_header %>
     </header>
 
-    <main style="margin: 1em;">
-      <h3>Create TinyURL</h3>
-      <form class="form-inline" action="/urls" method="POST">
+    <main class="outer" style="margin: 1em;">
+      <h3 style="text-align: center"></h3>
+      <form class="form-inline" action="/urls" method="POST" autocomplete="off">
         <div class="form-group mb-2">
-          <label for="longURL">Enter a URL: </label>
-          <input class="form-control" type="text" name="longURL" placeholder="http://www" style="width: 300px; margin: 1em">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input class="form-control" type="text" name="longURL" placeholder="Create TinyURL" style="width: 800px">
         </div>
       </form>
     </main>

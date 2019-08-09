@@ -1,0 +1,26 @@
+html,
+body {
+  height: 100%;
+}
+
+.outer {
+  height: 85%;
+}
+
+.form-inline {
+  height: 95%;
+  margin-left: 50px;
+  text-align: center;
+}
+
+.form-control {
+  margin-top: 50px;
+  margin-left: 450px;
+  margin-bottom: 50px;
+  height: 200px;
+  border-radius: 25px;
+  border-style: dashed;
+  border-color: black;
+  font-size: 65px;
+  text-align: center;
+}
