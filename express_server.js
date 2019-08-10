@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const app = express();
 const PORT = 8080;
 
+const routesRoot = require('./routes/00-root');
 const routesUrls = require('./routes/01-urls');
 const routesLogin = require('./routes/02-login');
 const routesLogout = require('./routes/03-logout');
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}), cookieSession({
 
 app.use(express.static('public'));
 
+app.use('/', routesRoot);
 app.use('/u', routesU);
 app.use('/urls', routesUrls);
 app.use('/login', routesLogin);

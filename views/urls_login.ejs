@@ -13,60 +13,34 @@
 
   <body class="text-center">
     
-      <header>
-        <!-- <% include partials/_header %> -->
-        <% if (alert) { %>
-          <div class="alert alert-danger" role="alert">
-            Please check your email and password.
-          </div>
-        <% } %>
-      </header>
-      <form class="form-signin" action="/login" method="POST">
-          <img class="mb-4" src="http://lettersandnumbers.org/freealphabetletters/green/alphabet_letter_t.jpg" alt="" width="72" height="72">
-          <h1 class="h3 mb-3 font-weight-normal">TinyApp</h1>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-          <div class="checkbox mb-3">
-            <label>
-            </label>
-          </div>
-          <button class="btn btn-lg btn-success btn-block" type="submit">Sign In</button>
-          <div class="checkbox mb-3" style="margin-top: 35px">
-              <label>
-                Don't have an account? <br>Sign up<a href='/register'> here</a>.
-              </label>
-            </div>
-          <p class="mt-5 mb-3 text-muted">� 2019</p>
-        </form>
-  
-      </main>
-  <!-- <body>
-    
     <header>
-      <% include partials/_header %>
       <% if (alert) { %>
         <div class="alert alert-danger" role="alert">
-            Please check your email and password.
+          Please check your email and password.
         </div>
       <% } %>
     </header>
-
-    <main style="margin: 1em;">
-      <h2>Login</h2>
-      <form action="/login" method="POST">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <form class="form-signin" action="/login" method="POST">
+        <a href='/urls'>
+          <img class="mb-4" src="http://lettersandnumbers.org/freealphabetletters/green/alphabet_letter_t.jpg" alt="" width="72" height="72">
+        </a>
+        <h1 class="h3 mb-3 font-weight-normal">TinyApp</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox mb-3">
+          <label>
+          </label>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" name= "password" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button class="btn btn-lg btn-success btn-block" type="submit">Sign In</button>
+        <div class="checkbox mb-3" style="margin-top: 35px">
+            <label>
+              Don't have an account? <br>Sign up<a href='/register'> here</a>.
+            </label>
+          </div>
+        <p class="mt-5 mb-3 text-muted">� 2019</p>
     </form>
-    </main> -->
 
       <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
